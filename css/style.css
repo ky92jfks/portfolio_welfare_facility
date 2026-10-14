@@ -1,0 +1,977 @@
+@charset "UTF-8";
+
+
+/* リセットCSS (A Modern CSS Reset)*/
+/* ボックスモデルの統一 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 不要なデフォルトマージンを削除 */
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol, li {
+  margin: 0;
+  padding: 0;
+}
+
+/* リストのスタイルをリセット */
+ul[role='list'], ol[role='list'] {
+  list-style: none;
+}
+
+/* bodyのデフォルト設定 */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* リンクのデフォルト装飾（クラスなしの場合） */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* 画像を扱いやすく設定 */
+img, picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* フォーム要素のフォント継承 */
+input, button, textarea, select {
+  font: inherit;
+}
+
+
+/* 共通設定 */
+* {
+  outline:none;
+}
+html {
+  font-size: 100%;
+}
+body {
+  background-color: #FFF;
+  font-family: "M PLUS 1", 'メイリオ', 'Meiryo', 'Hiragino Kaku Gothic Pro', sans-serif;
+  color: #363636;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  letter-spacing: 0.05rem;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+html, body {
+  /* ラバーバンド効果 (上下のバウンス(引っ張られる動き)) を無効化 */
+  overscroll-behavior-y: none;
+}
+img {
+  max-width: 100%;
+  vertical-align: bottom;
+}
+li {
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.5s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+.wrapper_toppage {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex_space-between {
+  display: flex;
+  justify-content: space-between;
+}
+.pc-img-left {
+  flex-direction: row-reverse;
+}
+
+.sub-title {
+  color: #F1AC3D;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+.section-title {
+  display: inline-block;
+  font-weight: 600;
+  line-height: 1.0;
+  font-size: 24px;
+  margin-bottom: 64px;
+}
+
+.text {
+  margin-bottom: 48px;
+}
+.button {
+  color: #FFF;
+  background-color: #F1AC3D;
+  font-size: 20px;
+  padding: 14px 20px;
+  border-radius: 50px;
+
+  img {
+    display: inline-block;
+    height: 20px;
+    margin-bottom: 7px;
+    margin-left: 10px;
+  }
+}
+
+/* CSSアニメーション */
+/* サイト読み込み時フェードイン+ズーム */
+@keyframes loadingmv {
+	0% {opacity: 0;transform: scale(1.05);}
+	100% {opacity: 1;transform: scale(1);}
+}
+.header-contents {
+  transform-origin: center;
+	animation: loadingmv 3s;
+}
+
+@keyframes loading-ptbtn {
+	0% {opacity: 0;}
+	50% {opacity: 0;}
+	100% {opacity: 1;}
+}
+#page_top_button {
+  animation: loading-ptbtn 3s;
+}
+
+/* 下からフェードイン */
+.fadein {
+  opacity: 0;
+  transform: translate(0,0);
+  transition: all 1.5s;
+  transform: translate(0,150px);
+
+  &.scrollin{
+    opacity: 1 !important;
+    transform: translate(0, 0) !important;
+  }
+}
+
+body {
+  background-color: #F6EFE1;
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #442B05;
+}
+
+#page_top_button {
+  position: fixed; /* 画面に常時固定する */
+  
+  /* 
+    【重要】1568pxのコンテナの右端にボタンを合わせる計算式
+    (100vw - 1568px) / 2 で「画面の左右の余白の半分」が求まるので、
+    それを right に指定すると、ちょうど1568pxの枠の右端に合う。
+    さらにそこから 20px ほど内側に離すための調整。
+  */
+  right: calc((100vw - 1568px) / 2 + 20px);
+  
+  bottom: 40px;
+  z-index: 100;
+
+  /* ★初期状態（ファーストビュー内）では隠しておく */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none; /* 隠れている時はクリックできないようにする */
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+
+  /* ★JSでこのクラスが付与されたらふわっと表示する */
+  &.is-show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto; /* 表示されたらクリック可能にする */
+  }
+
+  a {
+    display: block;
+    cursor: pointer;
+  }
+}
+
+.header-contents {
+  max-width: 1568px;
+  margin: 0 auto;
+  padding: 80px 20px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  position: relative;
+  background-color: #F6EFE1;
+  z-index: 50;
+}
+
+#header {
+  max-width: 15%;
+  .site-title_area {
+    display: flex;
+    justify-content: flex-start;
+    gap: 7px;
+    margin-bottom: 48px;
+
+    img {
+      display: inline-block;
+    }
+    .site-title {
+      display: inline-block;
+    }
+  }
+
+  #header-navigation {
+    .sp_menu-button_position {
+      display: none;
+    }
+
+    .navigation-cover {      
+      #side_navigation {
+        li {
+          text-align: end;
+          margin-bottom: 24px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    .sp-menu-overlay {
+      display: none;
+    }
+  }
+}
+
+#main-visual {
+  max-width: 85%;
+  background-color: #F6EFE1;
+  z-index: -1;
+
+  .fv {
+    max-width: 100%;
+
+    .sp {
+      display: none;
+    }
+  }
+  .site-concept {
+    position: absolute;
+    right: 0;
+    bottom: 204px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 24px;
+    p {
+      font-size: 32px;
+      color: #FFF;
+      background-color: #F1AC3D;
+      padding: 20px 24px;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      width: 90px;
+      height: 90px;
+      background-image: url('../img/clover.svg');
+      position: absolute;
+      right: 0;
+      top: -70px;
+    }
+  }
+
+  .scroll-area {
+    position: absolute;
+    right: 0;
+    bottom: 80px;
+  }
+}
+
+#about {
+  padding: 120px 0;
+
+  .flex {
+    column-gap: 5%;
+  }
+  .text-area {
+    max-width: 40%;
+    margin: auto 0;
+    .text {
+      p {
+        line-height: 1.8;
+        margin-bottom: 32px;
+      }
+    }
+  }
+  .img-area {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    align-items: flex-start;
+    .right {
+      align-self: flex-end;
+    }
+  }
+}
+
+#service {
+  padding: 120px 0;
+
+  .text-area {
+    margin-bottom: 80px;
+  }
+
+  .item-area {
+    gap: 90px;
+    justify-content: center;
+    
+    .item {
+      padding: 20px;
+      background-color: #FFF;
+      border-radius: 20px;
+
+      /* 親要素（.item）にホバーした時、内部の .img-box img を拡大 */
+      &:hover {
+        .img-box img {
+          transform: scale(1.05);
+        }
+      }
+
+      .img-box {
+        max-width: 300px;
+        max-height: 300px;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        
+        /* 画像単体にアニメーション（transition）を設定 */
+        img {
+          margin-bottom: 0;
+          transition: transform 0.5s ease;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+
+      .detail {
+        display: flex;
+        flex-direction: column;
+
+        .text {
+          margin-bottom: 40px;
+
+          .item-title {
+            font-size: 22px;
+            margin-bottom: 24px;
+          }
+
+          .explanation {
+            font-size: 16px;
+          }
+        }
+
+        .button {
+          align-self: flex-end;
+          color: #FFF;
+          background-color: #789B59;
+          font-size: 14px;
+          padding: 10px;
+          border-radius: 50px;
+
+          img {
+            display: inline-block;
+            height: 14px;
+            margin-bottom: 4px;
+            margin-left: 6px;
+          }
+        }
+      }
+
+      &.shadow-color-1 {
+        box-shadow: 6px 6px #D18495;
+      }
+      
+      &.shadow-color-2 {
+        box-shadow: 6px 6px #D0A762;
+      }
+      &.shadow-color-3 {
+        box-shadow: 6px 6px #AEC68B;
+      }
+      &.shadow-color-4 {
+        box-shadow: 6px 6px #80C8B8;
+      }
+      &.shadow-color-5 {
+        box-shadow: 6px 6px #929FCE;
+      }
+
+    }
+  }
+}
+
+#living {
+  padding: 120px 0 90px;
+}
+
+#medical {
+  padding: 120px 0 90px;
+}
+
+#family {
+  padding: 120px 0 90px;
+}
+
+#costs {
+  padding: 120px 0 90px;
+}
+
+#news {
+  padding: 120px 0 165px;
+  background-color: #F9CC83;
+
+  .title {
+    .sub-title {
+      color: #FFF;
+    }
+
+    .section-title {
+      margin-bottom: 80px;
+    }
+  }
+
+  .item-area {
+    gap: 30px;
+    margin-bottom: 120px;
+    
+    .item {
+      max-width: 31.65%;
+      position: relative;
+
+      a:hover {
+        opacity: 1.0;
+      }
+
+      &:hover {
+        .img-box img {
+          transform: scale(1.08);
+        }
+      }
+
+      .img-box {
+        max-width: 380px;
+        max-height: 285px;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 30px;
+
+        img {
+          margin-bottom: 0;
+          transition: transform 0.5s ease;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      .item-title {
+        max-width: 100%;
+        font-size: 18px;
+        line-height: 1.4;
+        margin-bottom: 70px;
+      }
+
+      .tag-area {
+        .category-tag {
+          position: absolute;
+          bottom: 0;
+          font-size: 18px;
+          background-color: #FFF;
+          border-radius: 10px;
+          line-height: 1.0;
+          padding: 10px;
+        }
+
+        time {
+          position: absolute;
+          bottom: 4px;
+          right: 0;
+        }
+      }
+    }
+  }
+
+  .wrapper_toppage {
+    position: relative;
+  }
+
+  .button {
+    color: #F1AC3D;
+    background-color: #FFF;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    transition: transform 0.5s;
+
+    &:hover {
+      opacity: 1.0;
+      transform: scale(1.08);
+    }
+  }
+}
+
+#recruit {
+  padding: 120px 0;
+  background-color: #AEC68B;
+
+  .title {
+    .sub-title {
+      color: #FFF;
+    }
+  }
+
+  .contents-area {
+    .img-box {
+      width: 50%;
+
+      img {
+        max-width: 100%;
+        border-radius: 60px 0 0 60px;
+      }
+    }
+
+    .text-area {
+      max-width: 50%;
+      background-color: #FFF;
+      padding: 100px 70px 80px 40px;
+      border-radius: 0 60px 60px 0;
+
+      .button {
+        background-color: #789B59;
+
+        img {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+}
+
+#contact {
+  padding: 120px 0;
+
+  .title {
+    .section-title {
+      margin-bottom: 80px;
+    }
+  }
+
+  .contents-area {
+    justify-content: center;
+    gap: 40px 10%;
+
+    .phone {
+      p {
+        font-size: 20px;
+        margin-bottom: 24px;
+      }
+
+      .number {
+        color: #789B59;
+        font-size: 56px;
+        font-weight: 800;
+      }
+      
+      .receptionhours {
+        color: #789B59;
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 0;
+      }
+    }
+
+    .button-area {
+      color: #FFF;
+      font-size: 32px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 32px;
+      max-width: 100%;
+
+      img {
+        display: inline-block;
+      }
+
+      .contact-button,
+      .q_and_a-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        width: 524px;
+        max-width: 100%;
+        border-radius: 20px;
+        padding: 30px 0;
+        color: inherit;
+      }
+
+      .contact-button {
+        background-color: #F1AC3D;
+        padding: 30px 0;
+      }
+      
+      .q_and_a-button {
+        background-color: #789B59;
+        padding: 30px 0;
+      }
+    }
+  }
+}
+
+#footer {
+  padding: 80px 0;
+  background-color: #789B59;
+  color: #FFF;
+
+  .site-title_area {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 100px;
+
+    img {
+      display: inline-block;
+    }
+    .site-title {
+      display: inline-block;
+      font-size: 24px;
+    }
+  }
+
+  .office {
+    font-size: 20px;
+    border-bottom: dotted 1px #FFF;
+    
+    .title {
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+    
+    .office-list {
+      gap: 44px;
+      margin-bottom: 80px;
+    }
+  }
+
+  .footer-navigation {
+    margin-top: 80px;
+    margin-bottom: 100px;
+    gap: 24px 44px;
+  }
+}
+
+/* 
+  ※画面幅が 1568px より小さくなった時（タブレットやスマホなど）の対策
+  画面が 1568px より狭くなると計算がマイナスになってしまうので、
+  メディアクエリで通常の「画面右端から 20px」に切り替える。
+*/
+@media (max-width: 1608px) { /* 1568px + 左右の余白分あたりの数値 */
+  #page_top_button {
+    right: 20px;
+  }
+}
+
+/* main-visual調整 */
+@media (max-width: 1530px) {
+  #main-visual {
+    .site-concept {
+      bottom: 160px;
+      p {
+        font-size: 20px;
+        padding: 14px 18px;
+      }
+    }
+  }
+}
+
+/******** タブレット・SP版 ********/
+@media (max-width: 1350px) {
+  /* 共通設定 */
+  .wrapper_toppage {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .header-contents {
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+
+  #header {
+    max-width: 100%;
+
+    #header-navigation {
+      /* PC用のメニューは非表示にする */
+      .pc-menu {
+        display: none;
+      }
+  
+      .sp_menu-button_position {
+        display: block;
+        position: fixed;
+        top: 30px;
+        right: 20px;
+        z-index: 100; /* メニューボタンを最前面に */
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+
+        /* 追加：hiddenクラスがついたときに非表示にする */
+        &.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none; /* 隠れている時はクリックも無効化 */
+          }
+        }
+    }
+  
+    /* ★SP版の全画面メニュー */
+    .sp-menu-overlay {
+      display: none;
+      position: fixed;   /* 画面全体に固定 */
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #FADDA2;
+      z-index: 99; /* 他の要素より手前に表示 */
+      padding: 80px 40px;
+      overflow-y: auto; /* メニューが多い場合にスクロールできるようにする */
+
+      .sp-menu-close {
+        position: fixed;
+        top: 30px;
+        right: 20px;
+        cursor: pointer;
+        z-index: 100; /* メニューボタンを最前面に */
+      }
+
+      .sp-menu-list {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        list-style: none;
+        padding: 0;
+
+        li {
+          text-align: center;
+          
+          a {
+            font-size: 20px;
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+          }
+        }
+      }
+    }
+
+  }
+  #news {
+    .item-area {
+      gap: 29px;
+
+      .item {
+        max-width: 31%;
+      }
+    }
+
+    .button {
+      right: 20px;
+    }
+  }
+
+}
+
+/* recruit調整 */
+@media (max-width: 1180px) {
+  #recruit {
+    .contents-area {
+      flex-direction: column;
+      align-items: center;
+      
+      .img-box {
+        img {
+          border-radius: 60px 60px 0 0;
+        }
+      }
+
+      .text-area {
+        border-radius: 0 0 60px 60px;
+      }
+    }
+  }
+}
+
+/******** SP版 ********/
+@media (max-width: 870px) {
+  #page_top_button {
+    right: 20px;
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  #main-visual {
+    max-width:  100%;
+    .fv {
+      margin-bottom: 60px;
+
+    }
+
+    .site-concept {
+      position: relative;
+      top: 0;
+
+      p {
+        width: 100%;
+      }
+    }
+
+    .scroll-area {
+      display: none;
+    }
+  }
+
+  #about {
+    padding: 80px 0;
+    .flex {
+      flex-direction: column;
+    }
+
+    .text-area {
+      max-width: 100%;
+    }
+
+    .img-area {
+      width: 100%;
+      align-items: center;
+      .right {
+        align-self: center;
+      }
+    }
+  }
+
+  #service {
+    padding: 80px 0;
+  }
+
+  #living {
+    padding: 80px 0;
+    
+    .flex_space-between {
+      flex-direction: column;
+      row-gap: 64px;
+    }
+    .img-area {
+      align-self: center;
+    }
+  }
+
+  #medical {
+    padding: 80px 0;
+
+    .flex_space-between {
+      flex-direction: column;
+      row-gap: 64px;
+    }
+    .img-area {
+      align-self: center;
+    }
+  }
+  
+  #family {
+    padding: 80px 0;
+
+    .flex_space-between {
+      flex-direction: column;
+      row-gap: 64px;
+    }
+    .img-area {
+      align-self: center;
+    }
+  }
+  #costs {
+    padding: 80px 0;
+
+    .flex_space-between {
+      flex-direction: column;
+      row-gap: 64px;
+    }
+    .img-area {
+      align-self: center;
+    }
+  }
+
+  #news {
+    .item-area {
+      gap: 40px 4%;
+
+      .item {
+        max-width: 100%;
+        width: 100%;
+
+        .img-box {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+  }
+
+  #recruit {
+    .contents-area {
+      .img-box {
+        width: 100%;
+
+        img {
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+      .text-area {
+        max-width: 100%;
+        width: 100%;
+        padding: 60px 40px;
+      }
+    }
+  }
+
+  #footer {
+    .office {
+      .office-list {
+        flex-direction: column;
+      }
+    }
+
+    .footer-navigation {
+      flex-direction: column;
+      gap: 44px;
+    }
+  }
+}
